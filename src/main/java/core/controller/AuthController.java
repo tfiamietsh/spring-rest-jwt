@@ -1,6 +1,6 @@
 package core.controller;
 
-import core.model.User;
+import core.entity.User;
 import core.service.JwtService;
 import core.service.UserService;
 

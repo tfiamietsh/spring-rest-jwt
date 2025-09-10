@@ -1,9 +1,8 @@
 package core.service;
 
-import core.model.User;
+import core.entity.User;
 import core.repository.UserRepository;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;

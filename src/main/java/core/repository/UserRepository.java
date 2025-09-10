@@ -1,6 +1,6 @@
 package core.repository;
 
-import core.model.User;
+import core.entity.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

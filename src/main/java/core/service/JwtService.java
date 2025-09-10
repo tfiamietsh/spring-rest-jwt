@@ -1,6 +1,6 @@
 package core.service;
 
-import core.model.User;
+import core.entity.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -56,7 +56,7 @@ public class JwtService {
 
         return claimsResolver.apply(parsedClaims.getPayload());
     }
-    
+
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
