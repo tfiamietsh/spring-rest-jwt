@@ -38,7 +38,7 @@ public class AuthController {
 
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Пользователь уже существует");
         } catch (UsernameNotFoundException e) {
-            userService.saveUser(user);
+            userService.register(user);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Пользователь успешно зарегистрирован");
         }
