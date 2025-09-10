@@ -1,4 +1,4 @@
-package core.configuration;
+package core.config;
 
 import core.security.JwtAuthenticationFilter;
 import core.service.UserService;
@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
