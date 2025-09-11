@@ -8,9 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,21 +39,9 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Имя пользователя не может быть пустым")
-    @Size(min = 4, max = 32, message = "Имя пользователя должно быть от 4 до 32 символов")
-    @Pattern(
-            regexp = "^[a-z][a-z0-9-]*$",
-            message = "Имя пользователя может содержать только строчные латинские буквы, цифры и дефис"
-    )
     private String username;
 
     @Column(nullable = false)
-    @NotBlank(message = "Пароль не может быть пустым")
-    @Size(min = 8, max = 16, message = "Пароль должен быть от 8 до 16 символов")
-    @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$",
-            message = "Пароль должен содержать хотя бы одну цифру, одну заглавную и одну строчную латинские буквы"
-    )
     private String password;
 
     @Enumerated(EnumType.STRING)

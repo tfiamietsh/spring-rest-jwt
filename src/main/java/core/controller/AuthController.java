@@ -1,5 +1,6 @@
 package core.controller;
 
+import core.dto.user.UserAuthDto;
 import core.entity.User;
 import core.service.AuthService;
 import core.service.JwtService;
@@ -9,6 +10,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,23 +31,23 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> postRegister(@Valid @RequestBody User user) {
+    public ResponseEntity<String> postRegister(@Valid @RequestBody UserAuthDto userAuthDto) {
         try {
-            userService.loadUserByUsername(user.getUsername());
+            userService.loadUserByUsername(userAuthDto.username());
 
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Пользователь уже существует");
         } catch (UsernameNotFoundException e) {
-            userService.register(user);
+            userService.register(userAuthDto);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Пользователь успешно зарегистрирован");
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> postLogin(@RequestBody User user) {
-        authService.authenticate(user);
+    public ResponseEntity<String> postLogin(@RequestBody UserAuthDto userAuthDto) {
+        Authentication authentication = authService.authenticateUserWithCredentials(userAuthDto);
 
-        User authenticatedUser = authService.getAuthenticatedUser();
+        User authenticatedUser = (User) authentication.getPrincipal();
         String jwt = jwtService.generateToken(authenticatedUser);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(jwt);

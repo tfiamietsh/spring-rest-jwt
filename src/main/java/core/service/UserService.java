@@ -1,5 +1,6 @@
 package core.service;
 
+import core.dto.user.UserAuthDto;
 import core.entity.User;
 import core.repository.UserRepository;
 
@@ -24,8 +25,11 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
     }
 
-    public void register(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public void register(UserAuthDto userAuthDto) {
+        User user = new User();
+
+        user.setUsername(userAuthDto.username());
+        user.setPassword(passwordEncoder.encode(userAuthDto.password()));
         user.setRole(User.Role.USER);
 
         userRepository.save(user);
