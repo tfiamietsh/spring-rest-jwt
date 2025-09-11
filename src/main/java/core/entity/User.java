@@ -17,6 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,11 +28,11 @@ public class User implements UserDetails {
     @AllArgsConstructor
     @Getter
     public enum Role {
-        USER("USER"),
-        STAFF("STAFF"),
-        ADMIN("ADMIN");
+        USER("USER", "Пользователь"),
+        STAFF("STAFF", "Модератор"),
+        ADMIN("ADMIN", "Администратор");
 
-        private final String name;
+        private final String name, displayName;
     }
 
     @Id
@@ -47,6 +48,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @Column(nullable = false)
+    private OffsetDateTime registrationTimestamp;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
