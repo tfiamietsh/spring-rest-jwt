@@ -57,6 +57,8 @@ public class SecurityConfig {
                         .hasRole("USER")
                         .requestMatchers("/posts/pending", "/posts/publish/{id}")
                         .hasRole("STAFF")
+                        .requestMatchers("/admin/**")
+                        .hasRole("ADMIN")
                         .anyRequest().authenticated()
                 ).sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
