@@ -17,13 +17,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class JwtAuthFilter extends OncePerRequestFilter {
     private static final String JWT_PREFIX = "Bearer ";
     private final UserService userService;
     private final JwtService jwtService;
     private final AuthService authService;
 
-    public JwtAuthenticationFilter(UserService userService, JwtService jwtService, AuthService authService) {
+    public JwtAuthFilter(UserService userService, JwtService jwtService, AuthService authService) {
         this.userService = userService;
         this.jwtService = jwtService;
         this.authService = authService;

@@ -1,6 +1,6 @@
 package core.config;
 
-import core.security.JwtAuthenticationFilter;
+import core.security.JwtAuthFilter;
 import core.service.UserService;
 
 import org.springframework.context.annotation.Bean;
@@ -45,11 +45,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter)
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter)
             throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/register", "auth/login")
                         .permitAll()
