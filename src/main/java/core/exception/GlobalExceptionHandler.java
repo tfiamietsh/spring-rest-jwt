@@ -36,4 +36,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> entityNotFoundExceptionHandler(EntityNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getLocalizedMessage());
     }
+
+    @ExceptionHandler(InvalidRoleChangeException.class)
+    public ResponseEntity<String> invalidRoleChangeExceptionHandler(InvalidRoleChangeException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getLocalizedMessage());
+    }
 }
