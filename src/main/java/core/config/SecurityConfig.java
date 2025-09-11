@@ -51,8 +51,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register", "auth/login")
+                        .requestMatchers("/auth/register", "/auth/login", "/posts")
                         .permitAll()
+                        .requestMatchers("/posts/suggest")
+                        .hasRole("USER")
+                        .requestMatchers("/posts/pending", "/posts/publish/{id}")
+                        .hasRole("STAFF")
                         .anyRequest().authenticated()
                 ).sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
