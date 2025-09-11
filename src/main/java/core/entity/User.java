@@ -1,5 +1,7 @@
 package core.entity;
 
+import core.enums.Role;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
@@ -9,12 +11,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.OffsetDateTime;
@@ -25,16 +24,6 @@ import java.util.List;
 @Table(name = "users")
 @Data
 public class User implements UserDetails {
-    @AllArgsConstructor
-    @Getter
-    public enum Role {
-        USER("USER", "Пользователь"),
-        STAFF("STAFF", "Модератор"),
-        ADMIN("ADMIN", "Администратор");
-
-        private final String name, displayName;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -54,7 +43,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        return List.of(role.toGrantedAuthority());
     }
 
     @Override

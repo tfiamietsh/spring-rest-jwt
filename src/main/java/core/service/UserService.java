@@ -3,6 +3,7 @@ package core.service;
 import core.dto.user.UserAuthDto;
 import core.dto.user.UserInfoDto;
 import core.entity.User;
+import core.enums.Role;
 import core.mapper.UserMapper;
 import core.repository.UserRepository;
 
@@ -42,7 +43,7 @@ public class UserService implements UserDetailsService {
 
         user.setUsername(userAuthDto.username());
         user.setPassword(passwordEncoder.encode(userAuthDto.password()));
-        user.setRole(User.Role.USER);
+        user.setRole(Role.USER);
         user.setRegistrationTimestamp(OffsetDateTime.now());
 
         userRepository.save(user);
